@@ -94,9 +94,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   creationTimestamp: "2026-10-12T14:18:08Z"
-  name: node-reader
-  resourceVersion: "473823264"
-  uid: 2647d6b3-ba46-41a3-807e-a85cf7777a13
+  name: node-reader  
 rules:
 - apiGroups:
   - ""
@@ -112,8 +110,6 @@ kind: ClusterRoleBinding
 metadata:
   creationTimestamp: "2026-10-12T14:18:37Z"
   name: alice-node-reader
-  resourceVersion: "473830827"
-  uid: 40a4541c-cb4c-46fb-8b70-8380dcd311fa
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
