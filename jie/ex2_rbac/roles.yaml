@@ -1,0 +1,51 @@
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: namespace-admin
+rules:
+- resources: ["*"]
+  verbs: ["*"]
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: namespace-reader
+rules:
+- resources: ["*"]
+  verbs: ["get", "list", "watch"]
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: alice-namespace-admin
+  namespace: alice
+subjects:
+- kind: User
+  name: alice
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: bob-namespace-admin
+  namespace: bob
+subjects:
+- kind: User
+  name: bob
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: alice-namespace-reader
+  namespace: alice
+subjects:
+- kind: User
+  name: bob
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: bob-namespace-reader
+  namespace: bob
+subjects:
+- kind: User
+  name: alice
