@@ -1,0 +1,49 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: deny-all
+spec:
+  podSelector: {}
+  ingress: []
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: deny-all-for-private
+spec:
+  podSelector:
+    matchExpressions:
+    - key: security
+      operator: In
+      values:
+      - "private"
+  ingress: []
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-all-for-public
+spec:
+  podSelector:
+    matchExpressions:
+    - key: security
+      operator: In
+      values:
+      - "public"
+  ingress:
+  - from: []
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-from-same-namespace
+spec:
+  podSelector: 
+    matchExpressions:
+    - key: security
+      operator: In
+      values:
+      - "namespace"
+  ingress:
+  - from:
+    - podSelector: {}
