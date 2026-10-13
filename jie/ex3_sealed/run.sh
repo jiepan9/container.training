@@ -31,3 +31,17 @@ sed -i '/status:/,/^$/d' deployment.yaml
 # create a new sealed secret for cluster-wide use
 kubectl create secret generic logging-api-token --from-literal=token=test-api-token --dry-run=client -o yaml | kubeseal --scope cluster-wide --format yaml > sealedsecret-logging-api-token-clusterwide.yaml
 kubectl create secret generic database-password --from-literal=password=test-database-password --dry-run=client -o yaml | kubeseal --scope cluster-wide --format yaml > sealedsecret-database-password-clusterwide.yaml
+
+# combine the two sealed secrets into a single yaml file
+cat sealedsecret-logging-api-token-clusterwide.yaml sealedsecret-database-password-clusterwide.yaml > sealedsecrets.yaml
+
+# apply the sealed secrets and deployment to dev namespace
+kubectl create namespace dev
+kubectl apply -f sealedsecrets.yaml -n dev
+kubectl apply -f deployment.yaml -n dev
+
+
+# apply the sealed secrets and deployment to staging namespace
+kubectl create namespace staging
+kubectl apply -f sealedsecrets.yaml -n staging
+kubectl apply -f deployment.yaml -n staging
