@@ -28,3 +28,6 @@ sed -i '/generation:/d' deployment.yaml
 sed -i '/annotations:/d' deployment.yaml
 sed -i '/status:/,/^$/d' deployment.yaml
 
+# create a new sealed secret for cluster-wide use
+kubectl create secret generic logging-api-token --from-literal=token=test-api-token --dry-run=client -o yaml | kubeseal --scope cluster-wide --format yaml > sealedsecret-logging-api-token-clusterwide.yaml
+kubectl create secret generic database-password --from-literal=password=test-database-password --dry-run=client -o yaml | kubeseal --scope cluster-wide --format yaml > sealedsecret-database-password-clusterwide.yaml

@@ -10,36 +10,6 @@ spec:
 status:
   phase: Active
 ---
-apiVersion: bitnami.com/v1alpha1
-kind: SealedSecret
-metadata:
-  name: database-password
-  namespace: dev
-spec:
-  encryptedData:
-    password: AgCHE0is8IhnXiapLEMT4OUw/d4V/+IQA9Oe/uHIWyh70/7MXthk7ymE+H4aIsIzqzALbZk6FFnROMyBtn9WJ8yI4B6FiA04pa8qQ5FyBd6T/rG/rQEH4maG7FSDRxc2Jvu/Gz92SE6UXUwpm6mKTn8bF+0kaA9TSLv8oXfZIkt7vU/xkr4qObefC0Uupeor8vS1Aez4PCRiAQARnrHNZm6rDGadL9zhLcb2cYR7X6X6kUDu+HGPb2DjIwWbQ3XrAzn6WoqUG0AleX0YZA3j5vHEptsq8t9hKwC6an+58GwGF2n2K83021BwxvZku+shNQDPEg94JHXL+urKCZ6aG/gRWLlFSJEk3KdmePpfwQxmtLbEU0pEhBVCTPsrcgIA2f38A1QVnZ4hIL35Mzyd5fNuHpFECR1mR7oDcDxahhWAvUOI7+Nsys+JksQZS45kse25ZwIGtl+dvzDYhbBJpzRpQPYNo0xgaDxc1ZSM1sf7Fuhi4KOC7Vt0Ky1HNT94/Z5t2R623/Iwp9/VAttzrkZod8LW5HAP1Ow7o/sEfL8nm18VEKOUnP31Xz/OdwF7W9FMd32ZIdcv3B/hKzXX9kqR+bWJnwtt6S5zwXmnWqM7/yaIJKjFKIe0IBGNOKVvxIuAWJ5ck6vYupoKv70UdItn8+wcKJwxkieQaaiXYswuevOCdXIyC0IkSoIuiOgw7ZFBEf92BIENqKaimqgOTgrxpl7uhWST
-  template:
-    metadata:
-      name: database-password
-      namespace: dev
-
----
-
-apiVersion: bitnami.com/v1alpha1
-kind: SealedSecret
-metadata:
-  name: logging-api-token
-  namespace: dev
-spec:
-  encryptedData:
-    token: AgDDODLL/CAaMzwLoxsEChdCtoHn7F7DdAfSEZuf6ILBdEFo5u+TiAyusYvKsdhw001xiEDRPzd1HKvuOBKICac7L14AqPwj3Op18il7ut8u5TifPGNwpTE6Mi7c+99F3l/tF4XbJDnT5EeyxqrIuNK/nXofbHBC3gQECgkG9yUi6oQiTNo3QEYqgFKIMK2ve29PIVGx9omgoAPSJrJKvmFDLjYoBsg0NJ9PCXF+CyH/eLTKggIcl+ewFd0v15BWGl96IDWU17kenFcZH6Y1cE54hAUbgbdaBhm1v9pgfPgLAEGVUkZbtIYzo8KBdlcMSrDlDo4cBCXjohBrXlazuL2HJUFCVutVxyeZFwKLjzp0Cxhhe/B5qAw0cDRbUe6QnJzGcqVD500mrqM5DVtuKDS9M2DGWlkVSSetZYa8MhbMQ0tJydIyveghBpcVUZXPPQp3Ajsy6fX/1CZoi4GbHQY218yLdn+wdo7amufS+28Y4FRkGggh7uGTn/oGpGvvG9P73w/UaI9UOw1qOOYmvVa2HcXMwPhOka3exEKp5UzdPD+j0fjUJpe2u1u6nYigLfDJ/mSn2yEUEjXAQX2RmXEsOYi/3xy1Odzft4gfYlxsp1Zr6zKo3ox21outUI4/jKGwfxOaZ89WeVWfjnBzsYXiXdEszhZ8Tf99Cvp2JiXxhNNk5ubAEpDXBvvocNa7vu6OcaRTlpMIsQhn03qc1Q==
-  template:
-    metadata:
-      name: logging-api-token
-      namespace: dev
-
----
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
