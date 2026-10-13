@@ -7,8 +7,6 @@ metadata:
 spec:
   finalizers:
   - kubernetes
-status:
-  phase: Active
 ---
 apiVersion: apps/v1
 kind: Deployment
