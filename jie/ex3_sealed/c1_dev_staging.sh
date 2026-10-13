@@ -45,3 +45,15 @@ kubectl apply -f deployment.yaml -n dev
 kubectl create namespace staging
 kubectl apply -f sealedsecrets.yaml -n staging
 kubectl apply -f deployment.yaml -n staging
+
+# get the the cert of prod cluster and save it to a file named prod-cert.pem
+
+# re-seal the secrets with the prod cluster cert
+VAL=$(kubectl get secret logging-api-token -n dev -o jsonpath='{.data.token}' | base64 -d)
+kubectl create secret generic logging-api-token  --from-literal=token="$VAL" --dry-run=client -o yaml | kubeseal --cert prod-cert.pem --scope cluster-wide --format yaml > sealedsecret-logging-api-token-prod.yaml
+
+VAL=$(kubectl get secret database-password -n dev -o jsonpath='{.data.password}' | base64 -d)
+kubectl create secret generic database-password  --from-literal=password="$VAL" --dry-run=client -o yaml | kubeseal --cert prod-cert.pem --scope cluster-wide --format yaml > sealedsecret-database-password-prod.yaml
+
+cat sealedsecret-logging-api-token-prod.yaml sealedsecret-database-password-prod.yaml > sealedsecrets-prod.yaml
+rm sealedsecret-logging-api-token-prod.yaml sealedsecret-database-password-prod.yaml
