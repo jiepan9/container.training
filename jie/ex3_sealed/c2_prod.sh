@@ -5,3 +5,8 @@ kubectl apply -f \
 # create namespace prod
 kubectl create namespace prod
 
+# create sealed secrets generated using prod cluster cert
+kubectl apply -f sealedsecrets-prod.yaml -n prod
+
+# create a deployment that uses the sealed secrets
+kubectl apply -f deployment.yaml -n prod
