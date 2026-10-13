@@ -10,3 +10,6 @@ kubectl apply -f sealedsecrets-prod.yaml -n prod
 
 # create a deployment that uses the sealed secrets
 kubectl apply -f deployment.yaml -n prod
+
+# apply the dev sealed secret key to the kube-system namespace on prod cluster
+kubectl apply -f dev-sealedsecret-key.yaml -n kube-system

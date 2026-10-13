@@ -57,3 +57,10 @@ kubectl create secret generic database-password  --from-literal=password="$VAL" 
 
 cat sealedsecret-logging-api-token-prod.yaml sealedsecret-database-password-prod.yaml > sealedsecrets-prod.yaml
 rm sealedsecret-logging-api-token-prod.yaml sealedsecret-database-password-prod.yaml
+
+# on dev cluster export the key of the dev/staging cluster to a yaml file named dev-sealedsecret-key.yaml
+kubectl get secret -n kube-system  -l sealedsecrets.bitnami.com/sealed-secrets-key -o yaml > dev-sealedsecret-key.yaml
+
+# remove uid, resourceVersion, creationTimestamp, and annotations from the dev-sealedsecret-key.yaml file
+
+# on prod cluster create a new secret named sealed-secrets-key in the kube-system namespace using the dev-sealedsecret-key.yaml file
