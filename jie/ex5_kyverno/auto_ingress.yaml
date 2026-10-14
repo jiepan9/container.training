@@ -29,22 +29,45 @@ spec:
         operator: AnyIn
         value: [80, 443]
     generate:
-      apiVersion: networking.k8s.io/v1
-      kind: Ingress
-      name: "{{request.object.metadata.name}}"
-      namespace: "{{ request.object.metadata.namespace}}"
-      synchronize: true
-      data:
-        spec:
-          ingressClassName: traefik
-          rules:
-          - host: "{{ request.object.metadata.labels.app }}.{{ request.object.metadata.namespace }}.wichita-ks.xyz"
-            http:
-              paths:
-              - path: /
-                pathType: Prefix
-                backend:
-                  service:
-                    name: "{{ request.object.metadata.name }}"
-                    port:
-                      number: "{{ request.object.spec.ports[0].port }}"
+      foreach:
+      - list: "request.object.ports[:1]"
+        apiVersion: networking.k8s.io/v1
+        kind: Ingress
+        name: "{{request.object.metadata.name}}"
+        namespace: "{{ request.object.metadata.namespace}}"
+        synchronize: true
+        data:
+          spec:
+            ingressClassName: traefik
+            rules:
+            - host: "{{ request.object.metadata.labels.app }}.{{ request.object.metadata.namespace }}.wichita-ks.xyz"
+              http:
+                paths:
+                - path: /
+                  pathType: Prefix
+                  backend:
+                    service:
+                      name: "{{ request.object.metadata.name }}"
+                      port:
+                        number: "{{ request.object.spec.ports[0].port }}"
+      - list: "request.object.ports[1:]"
+        apiVersion: gateway.networking.k8s.io/v1
+        kind: HTTPRoute
+        name: "{{ request.object.metadata.name }}"
+        namespace: "{{ request.object.metadata.namespace}}"
+        synchronize: true
+        data:
+          spec:
+            parentRefs:
+            - name: web
+              namespace: traefik
+            hostnames:
+            - "{{ request.object.metadata.namespace }}.wichita-ks.xyz"
+            rules:
+            - backendRefs:
+              - name: "{{ request.object.metadata.name }}"
+                port: "{{ request.object.spec.ports[0].port }}"
+              matches:
+                - path:
+                    type: PathPrefix
+                    value: "/{{ request.object.metadata.name }}"
