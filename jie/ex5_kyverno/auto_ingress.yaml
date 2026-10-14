@@ -70,3 +70,42 @@ spec:
                 - path:
                     type: PathPrefix
                     value: "/{{ request.object.metadata.name }}"
+  - name: create-tlsroute
+    match:
+      any:
+      - resources:
+          kinds:
+          - Service
+          selector:
+            matchLabels:
+              autotls: "true"
+    exclude:
+      any:
+      - resources:
+          namespaces:
+          - kube-system
+          - kyverno
+          - traefik
+    preconditions:
+      all:
+      - key: "{{request.object.spec.type}}"
+        operator: Equals
+        value: ClusterIP
+    generate:
+      apiVersion: gateway.networking.k8s.io/v1
+      kind: TLSRoute
+      name: "{{ request.object.metadata.name }}"
+      namespace: "{{ request.object.metadata.namespace}}"
+      synchronize: true
+      data:
+        spec:
+          parentRefs:
+          - name: web
+            namespace: traefik
+            sectionName: tls-passthrough
+          hostnames:
+          - "{{ request.object.metadata.name }}.{{ request.object.metadata.namespace }}.{{ request.object.metadata.labels.domain || 'wichita-ks.xyz' }}"
+          rules:
+          - backendRefs:
+            - name: "{{ request.object.metadata.name }}"
+              port: "{{ request.object.spec.ports[0].port }}"
