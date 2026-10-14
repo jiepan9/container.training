@@ -38,7 +38,7 @@ spec:
         spec:
           ingressClassName: traefik
           rules:
-          - host: "{{ request.object.metadata.name }}.{{ request.object.metadata.namespace }}.wichita-ks.xyz"
+          - host: "{{ request.object.metadata.labels.app }}.{{ request.object.metadata.namespace }}.wichita-ks.xyz"
             http:
               paths:
               - path: /
