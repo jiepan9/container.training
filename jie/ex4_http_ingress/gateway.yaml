@@ -21,7 +21,7 @@ spec:
     tls:
       mode: Terminate
       certificateRefs:
-      - name: staging-wichita-tls     # cert-manager will create this Secret
+      - name: staging-wichita-ks-xyz-tls     # cert-manager will create this Secret
     allowedRoutes:
       namespaces:
         from: All
