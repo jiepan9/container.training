@@ -1,0 +1,27 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: web
+  namespace: traefik
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+spec:
+  gatewayClassName: traefik
+  listeners:
+  - name: http
+    port: 8000                  # Traefik's web entry (container port, Service 80 maps to it)
+    protocol: HTTP
+    allowedRoutes:
+      namespaces: 
+        from: All
+  - name: https-staging
+    port: 8443                  # Traefik's websecure entry (Service 443 maps to it)
+    protocol: HTTPS
+    hostname: staging.wichita-ks.xyz
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - name: staging-wichita-tls     # cert-manager will create this Secret
+    allowedRoutes:
+      namespaces: 
+        from: All
