@@ -28,7 +28,7 @@ spec:
         spec:
           ingressClassName: traefik
           rules:
-          - host: "{{ request.object.metadata.name }}.{{ request.object.metadata.namespace }}.svc.cluster.local"
+          - host: "{{ request.object.metadata.name }}.{{ request.object.metadata.namespace }}.wichita-ks.xyz"
             http:
               paths:
               - path: /
