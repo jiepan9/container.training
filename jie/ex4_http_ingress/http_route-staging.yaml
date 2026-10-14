@@ -5,7 +5,7 @@ metadata:
   namespace: staging
 spec:
   parentRefs:
-  - name: traefik-gateway        # Gateway name
+  - name: web        # Gateway name
     namespace: traefik           # Gateway namespace
   hostnames:
   - staging.wichita-ks.xyz
