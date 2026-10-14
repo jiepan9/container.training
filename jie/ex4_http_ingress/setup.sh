@@ -22,3 +22,10 @@ k expose app -n staging --port 80
 # allow all namespaces to use the traefik-gateway
 kubectl patch gateway traefik-gateway -n traefik --type=json \
   -p='[{"op":"add","path":"/spec/listeners/0/allowedRoutes","value":{"namespaces":{"from":"All"}}}]'
+
+
+# install cert-manager
+helm repo add jetstack https://charts.jetstack.io
+helm install cert-manager jetstack/cert-manager -n cert-manager --create-namespace \
+  --set crds.enabled=true --set config.apiVersion=controller.config.cert-manager.io/v1alpha1 \
+  --set config.kind=ControllerConfiguration --set config.enableGatewayAPI=true
