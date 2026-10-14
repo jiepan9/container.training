@@ -40,7 +40,7 @@ spec:
           spec:
             ingressClassName: traefik
             rules:
-            - host: "{{ request.object.metadata.labels.app }}.{{ request.object.metadata.namespace }}.wichita-ks.xyz"
+            - host: "{{ request.object.metadata.labels.app }}.{{ request.object.metadata.namespace }}.{{ request.object.metadata.labels.domain || 'wichita-ks.xyz' }}"
               http:
                 paths:
                 - path: /
@@ -61,7 +61,7 @@ spec:
             - name: web
               namespace: traefik
             hostnames:
-            - "{{ request.object.metadata.namespace }}.wichita-ks.xyz"
+            - "{{ request.object.metadata.namespace }}.{{ request.object.metadata.labels.domain || 'wichita-ks.xyz' }}"
             rules:
             - backendRefs:
               - name: "{{ request.object.metadata.name }}"
