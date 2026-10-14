@@ -29,13 +29,13 @@ spec:
         operator: AnyIn
         value: [80, 443]
     generate:
-      foreach:
+      synchronize: true
+      foreach:      
       - list: "request.object.ports[:1]"
         apiVersion: networking.k8s.io/v1
         kind: Ingress
         name: "{{request.object.metadata.name}}"
         namespace: "{{ request.object.metadata.namespace}}"
-        synchronize: true
         data:
           spec:
             ingressClassName: traefik
@@ -55,7 +55,6 @@ spec:
         kind: HTTPRoute
         name: "{{ request.object.metadata.name }}"
         namespace: "{{ request.object.metadata.namespace}}"
-        synchronize: true
         data:
           spec:
             parentRefs:
