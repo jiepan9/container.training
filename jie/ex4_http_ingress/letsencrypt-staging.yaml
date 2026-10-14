@@ -6,8 +6,8 @@ spec:
   acme:
     server: https://acme-staging-v02.api.letsencrypt.org/directory
     email: jie.pan.mail@gmail.com
-    privateKeySecretRef: 
-    - name: letsencrypt-staging-key
+    privateKeySecretRef:
+      name: letsencrypt-staging-key
     solvers:
     - http01:
         gatewayHTTPRoute:
