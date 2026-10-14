@@ -13,7 +13,7 @@ helm upgrade --install traefik traefik/traefik -n traefik --create-namespace \
 helm upgrade traefik traefik/traefik -n traefik --reuse-values --set service.type=NodePort
 helm upgrade traefik traefik/traefik -n traefik --reuse-values --set service.type=LoadBalancer
 
-kubectl patch svc traefik -n traefik -p '{"spec":{"externalIPs":["10.10.2.144"]}}'
+kubectl patch svc traefik -n traefik -p '{"spec":{"externalIPs":["10.10.2.144","10.10.2.58","10.10.1.234","10.10.3.104"]}}'
 
 
 # create a service for existing deployment app
