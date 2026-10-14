@@ -17,7 +17,14 @@ spec:
           - kube-system
           - kyverno
           - traefik
-          
+    preconditions:
+      all:
+      - key: "{{request.object.spec.type}}"
+        operator: Equals
+        value: ClusterIP
+      - key: "{{request.object.spec.ports[0].port}}"
+        operator: AnyIn
+        value: [80, 443]
     generate:
       apiVersion: networking.k8s.io/v1
       kind: Ingress
