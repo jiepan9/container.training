@@ -4,12 +4,22 @@ metadata:
   name: auto-ingress
 spec:
   rules:
-  - name: auto-ingress-rule
+  - name: create-ingress
     match:
-      resources:
-        kinds:
-        - Service
+      any:
+      - resources:
+          kinds:
+          - Service
+    exclude:
+      any:
+      - resources:
+          namespaces:
+          - kube-system
+          - kyverno
+          - traefik
+          
     generate:
+      apiVersion: networking.k8s.io/v1
       kind: Ingress
       name: "{{request.object.metadata.name}}"
       namespace: "{{ request.object.metadata.namespace}}"
