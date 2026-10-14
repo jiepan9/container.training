@@ -1,0 +1,29 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: auto-ingress
+spec:
+  rules:
+  - name: auto-ingress-rule
+    match:
+      resources:
+        kinds:
+        - Service
+    generate:
+      kind: Ingress
+      name: "{{request.object.metadata.name}}"
+      namespace: "{{ request.object.metadata.namespace}}"
+      synchronize: true
+      data:
+        spec:
+          ingressClassName: traefik
+          rules:
+          - host: "{{ request.object.metadata.name }}.{{ request.object.metadata.namespace }}.svc.cluster.local"
+            http:
+              paths:
+              - path: /
+                backend:
+                  service:
+                    name: "{{ request.object.metadata.name }}"
+                    port:
+                      number: "{{ request.object.spec.ports[0].port }}"
