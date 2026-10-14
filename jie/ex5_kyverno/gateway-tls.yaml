@@ -1,0 +1,19 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: tls
+  namespace: traefik
+spec:
+  gatewayClassName: traefik
+  listeners:
+  - name: tls-passthrough
+    port: 8443                  # Traefik's websecure entry (Service 443 maps to it)
+    protocol: TLS
+    hostname: "*.test.wichita-ks.xyz"
+    tls:
+      mode: Passthrough         # no decryption; route by SNI, the backend terminates TLS
+    allowedRoutes:
+      namespaces:
+        from: All
+      kinds:
+      - kind: TLSRoute

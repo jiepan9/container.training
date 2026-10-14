@@ -100,7 +100,7 @@ spec:
       data:
         spec:
           parentRefs:
-          - name: web
+          - name: tls
             namespace: traefik
             sectionName: tls-passthrough
           hostnames:
